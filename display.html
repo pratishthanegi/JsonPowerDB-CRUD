@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Enter Record Id to Display Data</h2>
+        <form id="empForm" method="post">
+            <div class="form-group">
+                <span><label for="empId">Record ID:</label></span>
+                <input type="text" class="form-control" name="empId" id="empId" placeholder="Enter Record ID" required><br>
+                <input type="button" class="btn btn-primary" id="empDisp" value="DISPLAY" onclick="dispEmployee()">
+                <p id="show"></p>
+            </div>    
+        </form>
+    </div>
+
+    <script>
+        
+        function resetForm() {
+            $("#empId").val("")
+        }
+        
+        function dispEmployee(){
+            
+            var empId = document.getElementById("empId").value;
+            var jsonStr = {
+                empId : empId
+            };
+            var reqString = createGETRequest("90935951|-31948848342635464|90944719","SAMPLE","EMP-REL",JSON.stringify(jsonStr));
+            alert(reqString);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommandAtGivenBaseUrl(reqString,"http://api.login2explore.com:5577", "/api/iml");
+            jQuery.ajaxSetup({async: true});
+            
+            alert(JSON.stringify(resultObj));
+            formReset();
+              
+        }
+        
+    </script>
+
+</body>
+</html>
